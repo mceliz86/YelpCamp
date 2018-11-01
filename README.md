@@ -1,3 +1,2 @@
 # YelpCamp
-My own yelpcamp repository
-Hola gatos!
+Este es mi propio repositorio del curso Developer Web Bootcamp creado el 01/11/2018
