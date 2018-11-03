@@ -16,7 +16,8 @@ var express				= require("express"),
 	//seedDB = require("./seeds"),
 
 //mongoose.connect("mongodb://localhost:27017/yelp_camp", { useNewUrlParser: true });
-mongoose.connect("mongodb://mojeda:password1@ds147011.mlab.com:47011/yelpcamp", { useNewUrlParser: true });
+//mongoose.connect("mongodb://mojeda:password1@ds147011.mlab.com:47011/yelpcamp", { useNewUrlParser: true });
+mongoose.connect(process.env.DATABASEURL, { useNewUrlParser: true });
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine","ejs");
