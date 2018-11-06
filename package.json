@@ -10,6 +10,7 @@
   "author": "Matias Ojeda",
   "license": "ISC",
   "dependencies": {
+    "async": "^2.6.1",
     "body-parser": "^1.18.3",
     "connect-flash": "^0.1.1",
     "ejs": "^2.6.1",
@@ -21,6 +22,7 @@
     "moment": "^2.22.2",
     "mongoose": "^5.2.10",
     "node-geocoder": "^3.22.0",
+    "nodemailer": "^4.6.8",
     "opencage-api-client": "^0.3.0",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
