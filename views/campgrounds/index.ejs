@@ -4,6 +4,14 @@
 		<h1>Bienvenidos a YelpCamp!</h1>
 		<p>Encontrá tu campamento!</p>
 		<p><a class="btn btn-primary btn-lg" href="campgrounds/new" role="button">Agregar nuevo campamento</a></p>
+		<p>
+			<form action="/campgrounds" method="GET" class="form-inline">
+				<div class="form-group pull-right">
+					<input type="text" name="busqueda" class="form-inline" placeholder="campamento buscado">
+					<input type="submit" value="Buscar" class="btn btn-default">
+				</div>
+			</form>
+		</p>
 	</header>
 	
 	<div class="row">
