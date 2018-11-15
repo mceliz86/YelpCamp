@@ -136,7 +136,7 @@ router.post('/forgot', function(req, res, next) {
         text: 'Ha olvidado su password.\n\n' +
           'Por favor haga click en el siguiente enlace o copie la url en su navegador:\n\n' +
           'http://' + req.headers.host + '/reset/' + token + '\n\n' +
-          'Si no solicito el reseteo de password ignore este mail.\n'
+          'Si no solicitó el reseteo de password ignore este mail.\n'
       };
       smtpTransport.sendMail(mailOptions, function(err) {
         console.log('mail de password reset enviado');
