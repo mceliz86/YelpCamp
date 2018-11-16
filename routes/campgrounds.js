@@ -2,7 +2,28 @@ var express		= require("express");
 var router		= express.Router();
 var Campground	= require("../models/campground");
 var middleware  = require("../middleware");
+var multer		= require("multer");
+var cloudinary = require('cloudinary');
 
+var storage = multer.diskStorage({
+  filename: function(req, file, callback) {
+    callback(null, Date.now() + file.originalname);
+  }
+});
+var imageFilter = function (req, file, cb) {
+    // accept image files only
+    if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/i)) {
+        return cb(new Error('Only image files are allowed!'), false);
+    }
+    cb(null, true);
+};
+var upload = multer({ storage: storage, fileFilter: imageFilter})
+
+cloudinary.config({ 
+  cloud_name: 'mojeda86', 
+  api_key: 115421624635487, 
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
 
 //INDEX - list all campgrounds
 router.get("/",function(req,res){
@@ -38,23 +59,22 @@ router.get("/new", middleware.isLoggedIn, function(req, res){
 });
 
 //CREATE - create a new campground
-router.post("/", middleware.isLoggedIn, function(req,res){
-	var name = req.body.name;
-	var price = req.body.price;
-	var image = req.body.image;
-	var description = req.body.description;
-	var author = {
+router.post("/", middleware.isLoggedIn, upload.single('image'), function(req, res) {
+	cloudinary.uploader.upload(req.file.path, function(result) {
+  // add cloudinary url for the image to the campground object under image property
+	req.body.campground.image = result.secure_url;
+  // add author to campground
+	req.body.campground.author = {
 		id: req.user._id,
-		username: req.user.username
+    	username: req.user.username
 	};
-	var newCampground = {name: name, price: price,  image: image, description: description, author: author};
-	Campground.create(newCampground,function(err,campground){
-		if(err){
-			console.log("Error en la carga!");
-			console.log(err);
-		}else{
-			res.redirect("/campgrounds");
-		}
+	Campground.create(req.body.campground, function(err, campground) {
+    	if (err) {
+    	req.flash('error', err.message);
+    	return res.redirect('back');
+    	}
+    res.redirect('/campgrounds/' + campground.id);
+	});
 	});
 });
 
